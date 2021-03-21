@@ -1,6 +1,6 @@
 # MDFort (Molecular Dynamics in Fortran)
 
-A fortran code to simulate plasma particles using Molecular Dynamics Algorithm.
+A OpenMp parallel fortran code to simulate plasma particles using Molecular Dynamics Algorithm.
 
 ## Problem
 <!--Rayleigh Problem = gas between 2 plates ([Alexander & Garcia, 1997](https://doi.org/10.1063/1.168619)) -->
