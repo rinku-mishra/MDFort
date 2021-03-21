@@ -39,7 +39,7 @@ do i = 1,N
   vy(i) = (rand())*Vymax - Vymax/2.0d0
   svx = svx + vx(i)
   svy = svy + vy(i)
-enddo  
+enddo
 
 do i = 1,N
   vx(i) = vx(i) - svx/dfloat(N)
@@ -59,7 +59,7 @@ do i = 1,N
         ax(i) = ax(i) + fx
         ay(i) = ay(i) + fy
       endif
-    enddo 
+    enddo
 enddo
 
 !=============== Time Loop =======================
@@ -69,8 +69,8 @@ do t = 0.0d0+dt, tmax, dt
 
 KE = 0.0d0
   !$OMP PARALLEL SHARED(Lx,Ly,x,y,ux,uy,vx,vy,N,dt,ax,ay) PRIVATE (i,j,fx,fy,xdiff,ydiff,r)
-  !$OMP DO 
-  do i = 1,N 
+  !$OMP DO
+  do i = 1,N
     ux(i) = vx(i) + ax(i) * dt / 2.0d0
     uy(i) = vy(i) + ay(i) * dt / 2.0d0
     x(i) = x(i) + ux(i) * dt
@@ -78,9 +78,9 @@ KE = 0.0d0
     x(i) = x(i) - (int(x(i)/(Lx)))  * 2.0d0 * Lx      ! Periodic Boundary Condition
     y(i) = y(i) - (int(y(i)/(Ly))) * 2.0d0 * Ly      ! Periodic Boundary Condition
   enddo
-  !$OMP END DO 
- 
-  !$OMP DO 
+  !$OMP END DO
+
+  !$OMP DO
   do i = 1,N
     ax(i) = 0.0d0
     ay(i) = 0.0d0
@@ -94,12 +94,12 @@ KE = 0.0d0
           ax(i) = ax(i) + fx
           ay(i) = ay(i) + fy
         endif
-      enddo     
-  enddo  
- !$OMP END DO 
- !$OMP END PARALLEL 
+      enddo
+  enddo
+ !$OMP END DO
+ !$OMP END PARALLEL
 
-  !$OMP PARALLEL SHARED(p,x,y,dt,N,KE) PRIVATE (i,vx,vy) 
+  !$OMP PARALLEL SHARED(p,x,y,dt,N,KE) PRIVATE (i,vx,vy)
   !$OMP DO
   do i = 1,N
     vx(i) = ux(i) + ax(i) * dt / 2.0d0
@@ -107,23 +107,23 @@ KE = 0.0d0
     KE = KE + ( vx(i)*vx(i) + vy(i)*vy(i) ) / 2.0d0
   enddo
   !$OMP END DO
-  
- 
- !$OMP DO  
+
+
+ !$OMP DO
   do i = 1,N
     p = int(t/dt)
     write (p+100,*) x(i), y(i)
   enddo
- !$OMP END DO 
- !$OMP END PARALLEL 
+ !$OMP END DO
+ !$OMP END PARALLEL
 
   tau = 10.0d0 * dt
   scl = dsqrt (1.0d0 + (dt/tau) * ((Temp/(2.0d0*KE/(3.0d0*dfloat(N)) )) -1.0d0))
-  
+
   if (t .le. tmax/2.0d0) then
     do i = 1,N
       vx(i) = scl * vx(i)
-      vy(i) = scl * vy(i) 
+      vy(i) = scl * vy(i)
     enddo
   else
     vx(i) = vx(i)
