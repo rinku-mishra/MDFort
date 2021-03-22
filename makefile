@@ -41,6 +41,6 @@ clean:
 	@rm -f *~ $(ODIR)/*.o $(SDIR)/*.o $(SDIR)/*~
 	@rm -rf $(OUTDIR)
 
-data:
-	@echo "moving data files"
-	@mv fort.* $(OUTDIR)/
+# data:
+# 	@echo "moving data files"
+# 	@mv fort.* $(OUTDIR)/

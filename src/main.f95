@@ -6,6 +6,7 @@ integer N,i,j,p
 real*8 Lx,Ly,Vxmax,Vymax,tmax,dt,svx,svy,fx,fy,scl,KE,Temp,t,xdiff,ydiff,r,tau
 real, dimension (100) :: x,y,vx,vy,ux,uy,ax,ay
 integer, parameter :: seed = 99999999
+character (len=90) :: filename
 call srand(seed)
 
 Temp = 0.010d0
@@ -112,11 +113,14 @@ KE = 0.0d0
  !$OMP DO
   do i = 1,N
     p = int(t/dt)
-    write (p+100,*) x(i), y(i)
+    write(filename, '("output/fort.",I8.8)') p+100
+    open(unit=p+100,file=filename,status='unknown')
+    write(p+100,*) x(i),y(i)
+    ! write (p+100,*) x(i), y(i)
   enddo
  !$OMP END DO
  !$OMP END PARALLEL
-
+  close (p+100)
   tau = 10.0d0 * dt
   scl = dsqrt (1.0d0 + (dt/tau) * ((Temp/(2.0d0*KE/(3.0d0*dfloat(N)) )) -1.0d0))
 
@@ -131,6 +135,7 @@ KE = 0.0d0
   endif
 
 enddo     !time
+
 
 
 end program molecular_dynamics_2d

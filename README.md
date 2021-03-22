@@ -21,21 +21,17 @@ First make a clone of the master branch using the following command
 ```shell
 git clone https://github.com/rinku-mishra/MDFort.git
 ```
-Then enter inside the *MDFort* directory 
+Then enter inside the *MDFort* directory
 ```shell
 cd MDFort
 ```
 Now complile and built the *MDFort* code
 ```shell
 make all
-``` 
+```
 Usage
 -----
 Upon successful compilation, run the code using following command
 ```shell
 ./mdfort
 ```
-Move the data to the output directory after successful run using following commands
-```shell
-make data
-``` 
