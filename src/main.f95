@@ -130,12 +130,12 @@ KE = 0.0d0
       vy(i) = scl * vy(i)
     enddo
   else
-    vx(i) = vx(i)
-    vy(i) = vy(i)
+    do i = 1,N
+      vx(i) = vx(i)
+      vy(i) = vy(i)
+    enddo      
   endif
 
 enddo     !time
-
-
 
 end program molecular_dynamics_2d
