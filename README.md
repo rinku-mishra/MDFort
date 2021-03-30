@@ -25,13 +25,17 @@ Then enter inside the *MDFort* directory
 ```shell
 cd MDFort
 ```
-Now complile and built the *MDFort* code
+Now complile and built the *tara2d* code
+```shell
+make subsystems
+``` 
+
 ```shell
 make all
-```
+``` 
 Usage
 -----
 Upon successful compilation, run the code using following command
 ```shell
-./mdfort
+make run
 ```
