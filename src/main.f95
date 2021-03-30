@@ -1,32 +1,49 @@
 program molecular_dynamics_2d
+
 use omp_lib
 
+use cfgio_mod, only: cfg_t, parse_cfg
+
 implicit none
+
+type(cfg_t):: cfg
+
 integer N,i,j,p
-real*8 Lx,Ly,Vxmax,Vymax,tmax,dt,svx,svy,fx,fy,scl,KE,Temp,t,xdiff,ydiff,r,tau
-real, dimension (100) :: x,y,vx,vy,ux,uy,ax,ay
+real (kind = 8) Lx,Ly,Vxmax,Vymax,tmin,tmax,dt,svx,svy,fx,fy,scl,KE,Temp,t,xdiff,ydiff,r,tau
+real (kind = 8), dimension (:), allocatable :: x,y,vx,vy,ux,uy,ax,ay
 integer, parameter :: seed = 99999999
 character (len=90) :: filename
 call srand(seed)
 
-Temp = 0.010d0
+cfg = parse_cfg("input.ini")
+
+call cfg%get("particle","N",N)
+
+allocate(x(N))
+allocate(y(N))
+allocate(vx(N))
+allocate(vy(N))
+allocate(ux(N))
+allocate(uy(N))
+allocate(ax(N))
+allocate(ay(N))
+
+call cfg%get("temperature","Temp",Temp)
 
 write ( *, '(a,i8)' ) &
     '  The number of processors available = ', omp_get_num_procs ( )
 write ( *, '(a,i8)' ) &
     '  The number of threads available    = ', omp_get_max_threads ( )
 
+call cfg%get("length","Lx",Lx)
+call cfg%get("length","Ly",Ly)
 
-N = 100
-
-Lx = 1.0d0
-Ly = 1.0d0
+call cfg%get("time","tmin",tmin)
+call cfg%get("time","tmax",tmax)
+call cfg%get("time","dt",dt)
 
 Vxmax = 1.0d0
 Vymax = 1.0d0
-
-tmax = 1.0d0
-dt = 0.010d0
 
 svx = 0.0d0
 svy = 0.0d0
@@ -66,7 +83,7 @@ enddo
 !=============== Time Loop =======================
 
 
-do t = 0.0d0+dt, tmax, dt
+do t = tmin+dt, tmax, dt
 
 KE = 0.0d0
   !$OMP PARALLEL SHARED(Lx,Ly,x,y,ux,uy,vx,vy,N,dt,ax,ay) PRIVATE (i,j,fx,fy,xdiff,ydiff,r)
@@ -133,7 +150,7 @@ KE = 0.0d0
     do i = 1,N
       vx(i) = vx(i)
       vy(i) = vy(i)
-    enddo      
+    enddo
   endif
 
 enddo     !time
