@@ -1,5 +1,7 @@
 # MDFort (Molecular Dynamics in Fortran)
 
+[![build](https://github.com/rinku-mishra/MDFort/actions/workflows/main.yml/badge.svg)](https://github.com/rinku-mishra/MDFort/actions/workflows/main.yml)
+
 A OpenMp parallel Fortran code to simulate plasma particles using Molecular Dynamics Algorithm.
 
 ## Problem
