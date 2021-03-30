@@ -7,7 +7,7 @@ A OpenMp parallel Fortran code to simulate plasma particles using Molecular Dyna
 
 ## Contributors
 - [Rinku Mishra](https://github.com/rinku-mishra), CPP-IPR, India. [@arra4723](https://twitter.com/arra4723)
-
+- [Rupak Mukherjee](https://github.com/RupakMukherjee), PPPL, USA.
 
 Installation
 ------------
